@@ -1,0 +1,14 @@
+
+model {
+  # Informacion a priori
+  psi ~ dunif(0, 1)
+  p ~ dunif(0, 1)
+  # Probabilidad
+  for (i in 1:M) {             # Bucle sobre los sitios
+    z[i] ~ dbern(psi)          # Modelo de estado
+    for (j in 1:J) {           # Bucle sobre los muestreos replicados
+      y[i,j] ~ dbern(z[i]*p)   # Modelo de observacion
+    }
+  }
+}
+
