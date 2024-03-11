@@ -1,17 +1,19 @@
 #==============================================================================#
 #                                                                              #
 #                        MARCAJE-RECAPTURA ESPACIAL                            #
-#                     Seguimiento de la Diversidad Biológica                   #
-#                          José Jiménez (CSIC-IREC)                            #
+#                     Seguimiento de la Diversidad BiolÃ³gica                   #
+#                          JosÃ© JimÃ©nez (CSIC-IREC)                            #
 #                      UNIVERSIDAD DE CASTILLA-LA MANCHA                       #
 #                             27/02/2024 9:01:34                               #
 #                                                                              #
 #==============================================================================#
 
-#setwd('/Users/josejimenez/OneDrive - Universidad de Castilla-La Mancha/00 CURSOS/27 MasterToledo2020/')
-setwd('C:/Users/Administrator/OneDrive - Universidad de Castilla-La Mancha/00 Proyecto SCR/')
+setwd('C:/...')
 library(scrbook)
-source("FuncionesSCR_Toledo2020.R")
+library(coda)
+library(lattice)
+library(mcmcOutput)
+source("SCR_functions.R")
 set.seed(1960)
 N<-50
 m<-15
@@ -23,7 +25,7 @@ gx<-gy<-seq(0,6,1)
 X<-as.matrix(expand.grid(gx,gy))
 J<-dim(X)[1]
 
-# Límites de S
+# LÃ­mites de S
 xlims<-ylims<-c(-1.5, 7.5)
 
 # Simulamos datos
@@ -47,7 +49,7 @@ n<-dat$n-apply(dat$Yknown, 2:3, sum)
 n1<-apply(n,1,sum)
 
 # Desechamos las fotos que no sabemos si corresponden a animales identificados
-# o no. SMR no usa los registros de animales de estatus de identificación
+# o no. SMR no usa los registros de animales de estatus de identificaciÃ³n
 # desconocido
 
 X<-matrix(X, ncol=2)
@@ -134,15 +136,15 @@ samples <- as.matrix(CpumpMCMC$mvSamples)
 res<-mcmc.list(mcmc(samples))
 summary(window(res, start=500), dig=3)
 
-cat("Poblaci—n que simulamos = ", N, "individuos", "\n")
-cat("Fotograf’as de animales identificados)= ", sum(y), "\n")
-cat("Fotograf’as de animales no identificados", sum(n), "\n")
+cat("Poblaciâ€”n que simulamos = ", N, "individuos", "\n")
+cat("Fotografâ€™as de animales identificados)= ", sum(y), "\n")
+cat("Fotografâ€™as de animales no identificados", sum(n), "\n")
 
 
 xyplot(window(res, start=500))
 dat<-data.matrix(window(res, start=1000))
 
-# Coeficiente variaci—n
+# Coeficiente variaciâ€”n
 sd(dat[,1])/mean(dat[,1])
 
 # Histograma
