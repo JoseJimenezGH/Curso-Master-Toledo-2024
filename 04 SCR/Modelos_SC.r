@@ -1,8 +1,8 @@
 #==============================================================================#
 #                                                                              #
 #                       SCR - UNMARKED (CONTEOS ESPACIALES)                    #
-#                     Seguimiento de la Diversidad Biológica                   #
-#                          José Jiménez (CSIC-IREC)                            #
+#                     Seguimiento de la Diversidad BiolÃ³gica                   #
+#                          JosÃ© JimÃ©nez (CSIC-IREC)                            #
 #                      UNIVERSIDAD DE CASTILLA-LA MANCHA                       #
 #                             27/02/2024 9:01:34                               #
 #                                                                              #
@@ -10,10 +10,12 @@
 
 # Con este codigo se trata la informacion con el script del libro de Royle et
 # al. (2013)
-setwd('C:/Users/Administrator/OneDrive/66 Master Seguimiento de la Diversidad Biológica/Lab/03 SCR/')
-source("Funciones_SCR.R")
+setwd('C:/...')
+source("SCR_functions.R")
 library(nimble)
 library(MASS)
+library(coda)
+library(lattice)
 
 tr<-seq(1.5,8.5, length=10)
 X<-cbind(rep(tr,each=length(tr)),rep(tr,times=length(tr))) # 100 coord. trampas
@@ -60,7 +62,7 @@ points(S, pch=16, col="red", cex=1.25)
 mode = 0.5
 sd = 0.1
 
-# Obtenemos los parámetros de ratio y forma:
+# Obtenemos los parÃ¡metros de ratio y forma:
 ra = ( mode + sqrt( mode^2 + 4*sd^2 ) ) / ( 2 * sd^2 )
 sh = 1 + mode * ra
 
