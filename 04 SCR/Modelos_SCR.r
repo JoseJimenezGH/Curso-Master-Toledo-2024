@@ -1,23 +1,23 @@
 #==============================================================================#
 #                                                                              #
-#               MODELOS DE CAPTURA-RECAPTURA ESPACIALMENTE EXPLÕCITOS          #
-#                     Seguimiento de la Diversidad BiolÛgica                   #
-#                          JosÈ JimÈnez (CSIC-IREC)                            #
+#               MODELOS DE CAPTURA-RECAPTURA ESPACIALMENTE EXPL√çCITOS          #
+#                     Seguimiento de la Diversidad Biol√≥gica                   #
+#                          Jos√© Jim√©nez (CSIC-IREC)                            #
 #                      UNIVERSIDAD DE CASTILLA-LA MANCHA                       #
 #                             27/02/2024 9:01:34                               #
 #                                                                              #
 #==============================================================================#
-setwd('C:/Users/Administrator/OneDrive/66 Master Seguimiento de la Diversidad BiolÛgica/Lab/03 SCR/')
+setwd('C:/...')
 source("SCR_functions.R")
 library(scrbook)
 library(spatstat)
 library(lattice)
 library(coda)
 
-## SimulaciÛn de datos
-N <- 50  # TamaÒo de poblaciÛn
+## Simulaci√≥n de datos
+N <- 50  # Tama√±o de poblaci√≥n
 K <- 15  # Ocasiones de muestreo
-J <- 100 # n˙mero de trampas
+J <- 100 # n√∫mero de trampas
 
 data <- SimSCR0(N=N, K=K, array3d = TRUE, discard0=TRUE, rnd=2013)
 
@@ -40,7 +40,7 @@ y <- apply(y3d,c(1,2),sum); sum(y)
 yaug<-array(0,c(M,J))
 yaug[1:nind,]<-y
 
-# Ploteamos los capturados vs no capturados (puntos sÛlidos vs cÌrculos)
+# Ploteamos los capturados vs no capturados (puntos s√≥lidos vs c√≠rculos)
 plot(X, xlim=xlim, ylim=ylim, pch="+", asp=TRUE)
 points(S, pch=1, col="red", cex=1.5)
 captured<-apply(y3d,1,sum)
@@ -100,10 +100,10 @@ inits <- list (p0=0.5, alpha1=1, s=sst,
                z=c(rep(1, nind), rbinom((M-nind),1,0.2)))
 
 
-# Preparamos el modelo para ejecuciÛn en Nimble
+# Preparamos el modelo para ejecuci√≥n en Nimble
 Rmodel <- nimbleModel(code=code, constants=constants, data=dataN, inits=inits, check=FALSE)
 Cmodel <- compileNimble(Rmodel)
-# Establecemos los par·metros a monitorizar
+# Establecemos los par√°metros a monitorizar
 mcmcspec<-configureMCMC(Rmodel, monitors=c('N', 'D', 'sigma','psi', 'p0','s','z'))
 
 # Cambiamos el muestrador de z (opcional)
@@ -135,7 +135,7 @@ start.time2<-Sys.time()
 outNim <- runMCMC(CSCRMCMC, niter = ni , nburnin = nb , nchains = nc, inits=inits,
                   setSeed = TRUE, progressBar = TRUE, samplesAsCodaMCMC = TRUE)  
 end.time<-Sys.time()
-end.time-start.time2 # tiempo de ejecuciÛn
+end.time-start.time2 # tiempo de ejecuci√≥n
 
 # Resultados
 summary(outNim[,c('N','D','p0','psi', 'sigma')])
@@ -145,7 +145,7 @@ xyplot(outNim[,c('N','p0','psi', 'sigma')])
 
 gelman.diag(outNim[,c('N','p0','psi', 'sigma')], multivariate = FALSE)
 
-cat("PoblaciÛn que simulamos = ", data$N, "individuos", "\n")
+cat("Poblaci√≥n que simulamos = ", data$N, "individuos", "\n")
 cat("lambda0 simulada  = ", data$p0, "\n")
 cat("sigma simulada  = ", data$sigma, "\n")
 cat("Datos recogidos = ", sum(y), "foto-capturas", "\n")
@@ -153,7 +153,7 @@ cat("Datos recogidos = ", sum(y), "foto-capturas", "\n")
 
 samplesn<-data.matrix(outNim)
 
-# Coeficiente variaciÛn
+# Coeficiente variaci√≥n
 sd(samplesn[,2])/mean(samplesn[,2])
 
 # Histograma
@@ -161,7 +161,7 @@ hist(samplesn[,2], col="grey90")
 
 ################################################################################
 
-# VISUALIZACI”N ESPACIAL
+# VISUALIZACI√ìN ESPACIAL
 #========================
 
 s1 <- samplesn[,c(5:154)]   ; Sx<-as.matrix(s1)
