@@ -172,11 +172,11 @@ outNim <- runMCMC(CpumpMCMC, niter = ni , nburnin = nb , nchains = nc, inits=ini
                   setSeed = FALSE, progressBar = TRUE, samplesAsCodaMCMC = TRUE)
 end.time<-Sys.time()
 end.time-start.time2 # tiempo de ejecucion
-
+options(scipen=999)
 summary(outNim[,c('N','lam0','psi', 'sigma','r')])
 xyplot(outNim[,c('N','lam0','psi', 'sigma','r')])
 
 gelman.diag(outNim[,c('N','lam0','psi', 'sigma','r')], multivariate = FALSE)
 
-cat("Poblacion que simulamos = ", N, "individuos", "\n")
-cat("Fotografias (todos no identificados)", sum(n), "\n")
+cat("Población que simulamos = ", N, "individuos", "\n")
+cat("Fotografías (todos no identificados)", sum(n), "\n")
