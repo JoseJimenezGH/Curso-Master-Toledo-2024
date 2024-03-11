@@ -136,9 +136,9 @@ samples <- as.matrix(CpumpMCMC$mvSamples)
 res<-mcmc.list(mcmc(samples))
 summary(window(res, start=500), dig=3)
 
-cat("Poblaci—n que simulamos = ", N, "individuos", "\n")
-cat("Fotograf’as de animales identificados)= ", sum(y), "\n")
-cat("Fotograf’as de animales no identificados", sum(n), "\n")
+cat("Población que simulamos = ", N, "individuos", "\n")
+cat("Fotografías de animales identificados)= ", sum(y), "\n")
+cat("Fotografías de animales no identificados", sum(n), "\n")
 
 
 xyplot(window(res, start=500))
